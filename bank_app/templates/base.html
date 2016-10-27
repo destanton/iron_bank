@@ -1,0 +1,17 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Iron Bank</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome!</h1>
+    {% block content %}
+
+    {% endblock %}
+  </div>
+  </body>
+</html>
