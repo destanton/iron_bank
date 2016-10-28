@@ -3,7 +3,7 @@
 {% block content %}
 
     {% if request.user.is_authenticated %}
-      <a href="{% url 'transaction_create_view' user.id %}">Your Account</a>
+      <a href="{% url 'transaction_create_view' %}">Your Account</a>
     {% endif %}
 
 {% endblock %}

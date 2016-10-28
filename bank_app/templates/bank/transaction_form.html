@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container-fluid">
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <input type="submit" name="" value="submit">
+  </form>
+</div>
+<hr>
+<div class="container-fluid">
+{% for type in transaction %}
+  <br>
+  $ {{ type.amount }} &nbsp;
+  {{ type.transaction_type }}
+{% endfor %}
+<hr>
+Account Total: ${{ request.user.profile.get_total }}
+{{ amount }}
+</div>
+{% endblock %}

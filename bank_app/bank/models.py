@@ -32,3 +32,12 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+    @property
+    def get_total(self):
+        get_amount = Transaction.objects.filter(user=self.id)
+        new_list = []
+        for total in get_amount:
+            new_list.append(total.amount)
+        print(new_list)
+        return sum(new_list)
