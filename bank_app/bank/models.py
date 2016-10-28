@@ -1,6 +1,6 @@
 from django.db import models
 from django.dispatch import receiver
-from django.db.models.signals import postsave
+from django.db.models.signals import post_save
 
 TRANSACTION_TYPE = [
         ('W', 'Withdrawal'),
@@ -13,6 +13,9 @@ class Transaction(models.Model):
     time_created = models.DateTimeField(auto_now_add=True)
     amount = models.FloatField()
     transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPE, default='D')
+
+    def __str__(self):
+        return self.transaction_type
 
 
 @receiver(post_save, sender='auth.User')

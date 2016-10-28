@@ -15,10 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from bank.views import UserCreateView
+from bank.views import index_view, UserCreateView, TransactionCreateView, TransactionListCreateAPIView
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^$', index_view, name="index_view"),
+    url(r'^transaction/(?P<pk>\d+)/$', TransactionCreateView.as_view(), name='transaction_create_view'),
+    url(r'^api/transactions/$', TransactionListCreateAPIView.as_view(), name="transaction_list_create_api_view"),
     url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view")
 ]

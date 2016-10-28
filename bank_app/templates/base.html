@@ -7,11 +7,28 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
   </head>
   <body>
-    <div class="container">
-      <h1>Welcome!</h1>
+    <div class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="nav navbar-nav">
+          <li><a href="{% url 'index_view' %}">Home</a></li>
+          <li><a href="{% url 'user_create_view' %}">Create User</a></li>
+          {% if not request.user.is_authenticated %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          {% else %}
+          <li><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>
+          <h1>Welcome, {{ request.user }}!</h1>
+          {% endif %}
+
+      </div>
+      </div>
+      </div>
+      <div class="container-fluid">
+        <h1>The Iron Bank</h1>
+      </div>
+
     {% block content %}
 
     {% endblock %}
-  </div>
+
   </body>
 </html>
