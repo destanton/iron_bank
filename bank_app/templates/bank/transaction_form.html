@@ -11,13 +11,13 @@
 </div>
 <hr>
 <div class="container-fluid">
+  Your Account Number: {{ request.user.profile.id }}
 {% for type in transaction %}
   <br>
   $ {{ type.amount }} &nbsp;
-  {{ type.transaction_type }}
+  {{ type.get_transaction_type_display }}
 {% endfor %}
 <hr>
 Account Total: ${{ request.user.profile.get_total }}
-{{ amount }}
 </div>
 {% endblock %}

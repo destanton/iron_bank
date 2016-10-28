@@ -16,7 +16,7 @@ def index_view(request):
 
 class TransactionCreateView(CreateView):
     model = Transaction
-    success_url = "/"
+    success_url = reverse_lazy("transaction_create_view")
     fields = ('amount', 'transaction_type')
 
     def get_context_data(self, **kwargs):
