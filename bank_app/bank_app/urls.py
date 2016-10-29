@@ -15,13 +15,18 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from bank.views import index_view, UserCreateView, TransactionCreateView, TransactionListCreateAPIView
+from bank.views import index_view, UserCreateView, TransactionCreateView, TransactionListCreateAPIView,\
+                        TransactionDetailAPIView
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django.contrib.auth.urls')),
+    url(r'^obtain-token/$', obtain_auth_token),
     url(r'^$', index_view, name="index_view"),
     url(r'^transaction/$', TransactionCreateView.as_view(), name='transaction_create_view'),
+    url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view"),
+    # start API URLs
     url(r'^api/transactions/$', TransactionListCreateAPIView.as_view(), name="transaction_list_create_api_view"),
-    url(r'^create_user/$', UserCreateView.as_view(), name="user_create_view")
+    url(r'^api/transactions/(?P<pk>\d+)/$', TransactionDetailAPIView.as_view(), name="transaction_detail_api_view"),
 ]

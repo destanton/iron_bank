@@ -3,8 +3,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.views.generic import CreateView
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView
 from bank.models import Transaction, Profile
+from bank.serializers import TransactionSerializer
+from rest_framework.permissions import IsAuthenticated
+from bank.permissions import IsCurrentUser
 
 
 def index_view(request):
@@ -42,6 +45,18 @@ class UserCreateView(CreateView):
 
 
 class TransactionListCreateAPIView(ListCreateAPIView):
-    pass
-    # queryset = Transaction.objects.all()
-    # serializer_class = TransactionSerializer
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.request.user)
+    serializer_class = TransactionSerializer
+    permission_classes = (IsAuthenticated, )
+
+    def perform_create(self, serializer):
+        print(serializer)
+        serializer.save(user=self.request.user)
+        return super().perform_create(serializer)
+
+
+class TransactionDetailAPIView(RetrieveAPIView):
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+    permission_classes = (IsCurrentUser)
