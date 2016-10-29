@@ -1,6 +1,23 @@
 from django.db import models
 from django.dispatch import receiver
+from django.conf import settings
 from django.db.models.signals import post_save
+from rest_framework.authtoken.models import Token
+
+
+@receiver(post_save, sender='auth.User')
+def create_user_profile(**kwargs):
+    created = kwargs.get('created')
+    instance = kwargs.get('instance')
+    if created:
+        Profile.objects.create(user=instance)
+
+
+@receiver(post_save, sender=settings.AUTH_USER_MODEL)
+def create_auth_token(sender, instance=None, created=False, **kwargs):
+    if created:
+        Token.objects.create(user=instance)
+
 
 TRANSACTION_TYPE = [
         ('W', 'Withdrawal'),
@@ -18,14 +35,6 @@ class Transaction(models.Model):
         return self.transaction_type
 
 
-@receiver(post_save, sender='auth.User')
-def create_user_profile(**kwargs):
-    created = kwargs.get('created')
-    instance = kwargs.get('instance')
-    if created:
-        Profile.objects.create(user=instance)
-
-
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')
     favorite_color = models.CharField(max_length=50)
@@ -36,8 +45,6 @@ class Profile(models.Model):
     @property
     def get_total(self):
         get_amount = Transaction.objects.filter(user=self.id)
-        new_list = []
-        for total in get_amount:
-            new_list.append(total.amount)
+        new_list = [total.amount for total in get_amount]
         print(new_list)
         return sum(new_list)

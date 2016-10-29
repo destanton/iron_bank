@@ -59,4 +59,4 @@ class TransactionListCreateAPIView(ListCreateAPIView):
 class TransactionDetailAPIView(RetrieveAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
-    permission_classes = (IsCurrentUser)
+    permission_classes = (IsCurrentUser, )
