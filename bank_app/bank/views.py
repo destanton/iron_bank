@@ -8,6 +8,8 @@ from bank.models import Transaction, Profile
 from bank.serializers import TransactionSerializer
 from rest_framework.permissions import IsAuthenticated
 from bank.permissions import IsCurrentUser
+from django.core.exceptions import ValidationError
+
 
 
 def index_view(request):
@@ -31,8 +33,16 @@ class TransactionCreateView(CreateView):
     def form_valid(self, form):
         instance = form.save(commit=False)
         instance.user = self.request.user
+        instance.balance = instance.user.profile.get_total
+        # print(instance.balance)
         if instance.transaction_type == "W":
             instance.amount = -instance.amount
+            if instance.amount + instance.balance < 0:
+                # print(instance.amount)
+                # print(instance.balance)
+                # raise ValidationError("Insufficient Funds")
+                form.add_error('amount', 'Insufficient Funds for Withdrawal Amount')  # found this online and looks better than validation error page.
+                return self.form_invalid(form)
         elif instance.transaction_type == "D":
             instance.amount == instance.amount
         return super().form_valid(form)

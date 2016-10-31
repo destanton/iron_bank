@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 col-md-offset-5">
 
-    {% if request.user.is_authenticated %}
-      <a href="{% url 'transaction_create_view' %}">Your Account</a>
-    {% endif %}
 
+
+        {% if request.user.is_authenticated %}
+          <button type="button" name=""><a href="{% url 'transaction_create_view' %}">Your Account</a></button>
+        {% endif %}
+        </div>
+        </div>
+    </div>
 {% endblock %}

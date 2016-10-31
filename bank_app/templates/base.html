@@ -5,6 +5,13 @@
     <meta charset="utf-8">
     <title>Iron Bank</title>
     <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" media="screen" title="no title">
+    <style media="screen">
+      body{
+        background-color: #d8d8d8;
+        color: darkblue;
+        background-position: center;
+      }
+    </style>
   </head>
   <body>
     <div class="navbar navbar-default">
@@ -12,20 +19,19 @@
         <div class="nav navbar-nav">
           <li><a href="{% url 'index_view' %}">Home</a></li>
           <li><a href="{% url 'user_create_view' %}">Create User</a></li>
-          {% if not request.user.is_authenticated %}
+            {% if not request.user.is_authenticated %}
           <li><a href="{% url 'login' %}">Login</a></li>
-          {% else %}
+            {% else %}
           <li><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>
-          <h1>Welcome, {{ request.user }}!</h1>
-          {% endif %}
-
+          <li> <a href="{% url 'index_view' %}"> Welcome, {{ request.user }}!</a></li>
+            {% endif %}
+        </div>
       </div>
-      </div>
-      </div>
-      <div class="container-fluid">
-        <h1>The Iron Bank</h1>
-      </div>
-
+    </div>
+    <div class="container-fluid">
+      <h1 align="center">The Iron Bank of Hogwarts</h1>
+      <br>
+    </div>
     {% block content %}
 
     {% endblock %}

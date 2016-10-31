@@ -46,5 +46,5 @@ class Profile(models.Model):
     def get_total(self):
         get_amount = Transaction.objects.filter(user=self.id)
         new_list = [total.amount for total in get_amount]
-        print(new_list)
+        # print(new_list)
         return sum(new_list)
