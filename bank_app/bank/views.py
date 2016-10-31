@@ -11,7 +11,6 @@ from bank.permissions import IsCurrentUser
 from django.core.exceptions import ValidationError
 
 
-
 def index_view(request):
     context = {
         "info": Transaction.objects.all()
@@ -41,8 +40,8 @@ class TransactionCreateView(CreateView):
                 # print(instance.amount)
                 # print(instance.balance)
                 # raise ValidationError("Insufficient Funds")
-                form.add_error('amount', 'Insufficient Funds for Withdrawal Amount')  # found this online and looks better than validation error page.
-                return self.form_invalid(form)
+                form.add_error('amount', 'Insufficient Funds for Withdrawal Amount')
+                return self.form_invalid(form)  # found ^ < online and looks better than validation error page.
         elif instance.transaction_type == "D":
             instance.amount == instance.amount
         return super().form_valid(form)
@@ -58,7 +57,7 @@ class TransactionListCreateAPIView(ListCreateAPIView):
     def get_queryset(self):
         return Transaction.objects.filter(user=self.request.user)
     serializer_class = TransactionSerializer
-    permission_classes = (IsAuthenticated, )
+    permission_classes = (IsAuthenticated, )  # used this instead of IsCurrentUser because error code is prettier
 
     def perform_create(self, serializer):
         print(serializer)

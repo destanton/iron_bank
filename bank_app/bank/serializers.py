@@ -8,4 +8,4 @@ class TransactionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Transaction
-        exclude = ("user", )
+        fields = '__all__'
