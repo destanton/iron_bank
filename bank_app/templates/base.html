@@ -23,7 +23,7 @@
           <li><a href="{% url 'login' %}">Login</a></li>
             {% else %}
           <li><a href="{% url 'logout' %}?next={% url 'index_view' %}">Logout</a></li>
-          <li> <a href="{% url 'index_view' %}"> Welcome, {{ request.user }}!</a></li>
+          <li> <p class="navbar-text" style="color:darkblue;">Welcome, <b>{{ request.user }}!</b></p></li>
             {% endif %}
         </div>
       </div>
@@ -31,6 +31,7 @@
     <div class="container-fluid">
       <h1 align="center">The Iron Bank of Hogwarts</h1>
       <br>
+
     </div>
     {% block content %}
 
