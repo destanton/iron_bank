@@ -34,6 +34,9 @@ class Transaction(models.Model):
     def __str__(self):
         return self.transaction_type
 
+    class Meta:
+        ordering = ("-time_created",)
+
 
 class Profile(models.Model):
     user = models.OneToOneField('auth.User')

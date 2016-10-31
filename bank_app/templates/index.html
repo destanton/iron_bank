@@ -3,12 +3,12 @@
 {% block content %}
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-3 col-md-offset-5">
+        <div class="col-md-2 col-md-offset-5">
 
 
 
         {% if request.user.is_authenticated %}
-          <button type="button" name=""><a href="{% url 'transaction_create_view' %}">Your Account</a></button>
+          <button type="button" class="btn btn-warning btn-block"><a href="{% url 'transaction_create_view' %}">Your Account</a></button>
         {% endif %}
         </div>
         </div>
